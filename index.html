@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Login - Damarsari Rent Car</title>
+
+      <!-- CSS -->
+      <link
+         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+         rel="stylesheet"
+      />
+      <link
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+         rel="stylesheet"
+      />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+         rel="stylesheet"
+      />
+      <link rel="stylesheet" href="assets/css/styles.css" />
+
+      <!-- JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+   </head>
+
+   <body>
+      <div id="loginPage" class="glass-card">
+         <h1>Login</h1>
+         <form id="loginForm">
+            <div class="form-group">
+               <label for="username" class="sr-only">Username</label>
+               <div class="input-group">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text"
+                        ><i class="fas fa-user"></i
+                     ></span>
+                  </div>
+                  <input
+                     type="text"
+                     class="form-control"
+                     id="username"
+                     placeholder="Username"
+                     required
+                  />
+               </div>
+            </div>
+            <div class="form-group">
+               <label for="password" class="sr-only">Password</label>
+               <div class="input-group">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text"
+                        ><i class="fas fa-lock"></i
+                     ></span>
+                  </div>
+                  <input
+                     type="password"
+                     class="form-control"
+                     id="password"
+                     placeholder="Password"
+                     required
+                  />
+               </div>
+            </div>
+            <button
+               type="submit"
+               id="loginButton"
+               class="btn btn-primary btn-block"
+            >
+               Login
+            </button>
+         </form>
+      </div>
+
+      <div id="invoicePage" class="glass-card" style="display: none">
+         <h1>Form Invoice</h1>
+         <form id="invoiceForm">
+            <div class="form-group">
+               <label for="name"><i class="fas fa-user"></i> Nama:</label>
+               <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  required
+               />
+            </div>
+            <div class="form-group">
+               <label for="carModel"
+                  ><i class="fas fa-car"></i> Model Mobil:</label
+               >
+               <select
+                  class="form-control"
+                  id="carModel"
+                  name="carModel"
+                  onchange="updatePrice()"
+                  required
+               >
+                  <option value="" disabled selected>Pilih Model Mobil</option>
+                  <option value="Alphard">Alphard - Rp. 2.500.000</option>
+                  <option value="Fortuner">Fortuner - Rp. 1.500.000</option>
+                  <option value="Pajero">Pajero - Rp. 1.500.000</option>
+                  <option value="Innova zenix">
+                     Innova zenix - Rp. 800.000
+                  </option>
+                  <option value="Innova reborn">
+                     Innova reborn - Rp. 600.000
+                  </option>
+                  <option value="Xpander">Xpander - Rp. 500.000</option>
+                  <option value="Terios">Terios - Rp. 500.000</option>
+                  <option value="Rush">Rush - Rp. 500.000</option>
+                  <option value="Avanza Matic">
+                     Avanza (Matic) - Rp. 450.000
+                  </option>
+                  <option value="Avanza Manual">
+                     Avanza (Manual) - Rp. 350.000
+                  </option>
+                  <option value="Xenia Manual">
+                     Xenia (Manual) - Rp. 350.000
+                  </option>
+               </select>
+            </div>
+            <div class="form-group">
+               <label for="rentalDate"
+                  ><i class="fas fa-calendar-alt"></i> Tanggal Rental:</label
+               >
+               <input
+                  type="date"
+                  class="form-control"
+                  id="rentalDate"
+                  name="rentalDate"
+                  required
+               />
+            </div>
+            <div class="form-group">
+               <label for="rentalDuration"
+                  ><i class="fas fa-clock"></i> Durasi Rental (hari):</label
+               >
+               <input
+                  type="number"
+                  class="form-control"
+                  id="rentalDuration"
+                  name="rentalDuration"
+                  oninput="calculateTotal()"
+                  required
+               />
+            </div>
+            <div class="form-group">
+               <label for="totalCost"
+                  ><i class="fas fa-money-bill-alt"></i> Total Biaya:</label
+               >
+               <input
+                  type="text"
+                  class="form-control"
+                  id="totalCost"
+                  name="totalCost"
+                  readonly
+                  required
+               />
+            </div>
+            <div class="form-group">
+               <label for="recipientPhone"
+                  ><i class="fas fa-phone"></i> Nomor HP Penerima:</label
+               >
+               <input
+                  type="tel"
+                  class="form-control"
+                  id="recipientPhone"
+                  name="recipientPhone"
+                  pattern="[0-9]{9,15}"
+                  required
+               />
+            </div>
+            <button
+               type="submit"
+               id="sendInvoiceButton"
+               class="btn btn-primary btn-block"
+            >
+               <i class="fas fa-paper-plane"></i> Kirim Invoice
+            </button>
+         </form>
+      </div>
+
+      <!-- JavaScript -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <script src="assets/js/scripts.js"></script>
+   </body>
+</html>
