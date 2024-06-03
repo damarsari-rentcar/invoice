@@ -93,7 +93,7 @@ function handleLogin() {
 
    const validUsers = {
       aldo: "25f43b1486ad95a1398e3eeb3d83bc4010015fcc9bedb35b432e00298d5021f7",
-      dias: "76b72885e8db8498e6e037b7e2ae60e44ebf85c61e3bbeb0e6b2dc7e1f3f9d64",
+      dias: "1c142b2d01aa34e9a36bde480645a57fd69e14155dacfab5a3f9257b77fdc8d8",
    };
 
    if (validUsers[username] && validUsers[username] === hashedPassword) {
