@@ -92,8 +92,8 @@ function handleLogin() {
    const hashedPassword = CryptoJS.SHA256(password).toString();
 
    const validUsers = {
-      aldo: "25f43b1486ad95a1398e3eeb3d83bc4010015fcc9bedb35b432e00298d5021f7",
-      dias: "1c142b2d01aa34e9a36bde480645a57fd69e14155dacfab5a3f9257b77fdc8d8",
+      aldo: "c469aed97adf5d2bd3d2c0900e5b66ce114bcdd425f60bee72d78385048cf1bb",
+      dias: "1ae09c800f9ba5c71fec37a91be3c23a65dfb666d1386c3dc1ab23415cdf51b4",
    };
 
    if (validUsers[username] && validUsers[username] === hashedPassword) {
