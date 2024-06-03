@@ -1,24 +1,27 @@
 document.addEventListener("DOMContentLoaded", function () {
    const loginForm = document.getElementById("loginForm");
    const loginButton = document.getElementById("loginButton");
+   const invoiceForm = document.getElementById("invoiceForm");
+   const sendInvoiceButton = document.getElementById("sendInvoiceButton");
 
    if (loginForm && loginButton) {
       loginButton.addEventListener("click", function (event) {
          event.preventDefault();
-         login();
+         handleLogin();
       });
    }
-});
-document.addEventListener("DOMContentLoaded", function () {
-   const invoiceForm = document.getElementById("invoiceForm");
-   const sendInvoiceButton = document.getElementById("sendInvoiceButton");
 
    if (invoiceForm && sendInvoiceButton) {
       sendInvoiceButton.addEventListener("click", function (event) {
          event.preventDefault();
-         sendInvoice();
+         handleInvoice();
       });
    }
+
+   document.getElementById("carModel").addEventListener("change", updatePrice);
+   document
+      .getElementById("rentalDuration")
+      .addEventListener("input", updatePrice);
 });
 
 const carPrices = {
@@ -54,7 +57,7 @@ function calculateTotal() {
    }
 }
 
-function sendInvoice() {
+function handleInvoice() {
    const name = document.getElementById("name").value;
    const carModel = document.getElementById("carModel").value;
    const rentalDate = document.getElementById("rentalDate").value;
@@ -63,7 +66,19 @@ function sendInvoice() {
    const recipientPhone = document.getElementById("recipientPhone").value;
    const formattedRecipientPhone = recipientPhone.replace(/^0/, "62");
 
-   const message = `*Damarsari Rent Car*\n========================\n\n*Invoice Rental Mobil*\n\n*Nama:* ${name}\n*Model Mobil:* ${carModel}\n*Tanggal Rental:* ${rentalDate}\n*Durasi Rental:* ${rentalDuration} hari\n*Total Biaya:* ${totalCost}\n\n========================`;
+   const message = `*Damarsari Rent Car*\n
+========================
+          *INVOICE RENTAL MOBIL*
+========================
+\n*Nama Pelanggan:* ${name}
+\n*Model Mobil:* ${carModel}
+\n*Tanggal Rental:* ${rentalDate}
+\n*Durasi Rental:* ${rentalDuration} hari
+\n*Total Biaya:* ${totalCost}
+\n========================\n
+Terima kasih telah menggunakan layanan kami.
+\nDamarsari Rent Car`;
+
    const whatsappUrl = `https://api.whatsapp.com/send?phone=${formattedRecipientPhone}&text=${encodeURIComponent(
       message
    )}`;
@@ -71,7 +86,7 @@ function sendInvoice() {
    window.open(whatsappUrl, "_blank");
 }
 
-function login() {
+function handleLogin() {
    const username = document.getElementById("username").value;
    const password = document.getElementById("password").value;
    const hashedPassword = CryptoJS.SHA256(password).toString();
