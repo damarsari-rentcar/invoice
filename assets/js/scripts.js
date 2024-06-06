@@ -14,7 +14,10 @@ document.addEventListener("DOMContentLoaded", function () {
    if (invoiceForm && sendInvoiceButton) {
       sendInvoiceButton.addEventListener("click", function (event) {
          event.preventDefault();
-         handleInvoice();
+
+         if (validateForm()) {
+            handleInvoice();
+         }
       });
    }
 
@@ -22,6 +25,86 @@ document.addEventListener("DOMContentLoaded", function () {
    document
       .getElementById("rentalDuration")
       .addEventListener("input", updatePrice);
+
+   document.getElementById("name").addEventListener("input", function () {
+      validateName();
+   });
+
+   document
+      .getElementById("recipientPhone")
+      .addEventListener("input", function () {
+         validatePhone();
+      });
+
+   function validateName() {
+      const name = document.getElementById("name").value;
+      const errorMessageName = document.getElementById("error-message");
+
+      if (!name) {
+         errorMessageName.style.display = "none";
+      } else if (!/^[A-Za-z\s]+$/.test(name)) {
+         errorMessageName.textContent = "Nama hanya boleh mengandung huruf.";
+         errorMessageName.style.display = "block";
+         errorMessageName.style.fontFamily = "Arial, sans-serif";
+         errorMessageName.style.fontSize = "12px";
+         errorMessageName.style.color = "red";
+         errorMessageName.style.marginTop = "10px";
+         errorMessageName.style.textAlign = "center";
+      } else {
+         errorMessageName.style.display = "none";
+      }
+   }
+
+   function validatePhone() {
+      const recipientPhone = document.getElementById("recipientPhone").value;
+      const errorMessage = document.getElementById("error-message");
+
+      if (
+         recipientPhone.match(/^0|^\+62/) &&
+         recipientPhone.match(/^\d{9,14}$/)
+      ) {
+         errorMessage.style.display = "none";
+      }
+   }
+
+   function validateForm() {
+      const name = document.getElementById("name").value;
+      const carModel = document.getElementById("carModel").value;
+      const rentalDate = document.getElementById("rentalDate").value;
+      const rentalDuration = document.getElementById("rentalDuration").value;
+      const recipientPhone = document.getElementById("recipientPhone").value;
+      const errorMessage = document.getElementById("error-message");
+
+      if (name && carModel && rentalDate && rentalDuration && recipientPhone) {
+         if (
+            !recipientPhone.match(/^0|^\+62/) ||
+            !recipientPhone.match(/^\d{9,14}$/)
+         ) {
+            errorMessage.textContent =
+               "Nomor telepon harus dimulai dengan '0' atau '+62' dan memiliki panjang antara 9 hingga 14 digit.";
+            errorMessage.style.display = "block";
+            errorMessage.style.fontFamily = "Arial, sans-serif";
+            errorMessage.style.fontSize = "12px";
+            errorMessage.style.color = "red";
+            errorMessage.style.marginTop = "10px";
+            errorMessage.style.textAlign = "center";
+            return false;
+         }
+
+         errorMessage.style.display = "none";
+         return true;
+      } else {
+         errorMessage.textContent =
+            "Mohon lengkapi semua input sebelum mengirimkan invoice.";
+         errorMessage.style.display = "block";
+         errorMessage.style.fontFamily = "Arial, sans-serif";
+         errorMessage.style.fontSize = "12px";
+         errorMessage.style.color = "red";
+         errorMessage.style.marginTop = "10px";
+         errorMessage.style.textAlign = "center";
+         return false;
+      }
+   }
 });
 
 const carPrices = {
@@ -123,6 +206,37 @@ function handleLogin() {
    if (validUsers[username] && validUsers[username] === hashedPassword) {
       document.getElementById("loginPage").style.display = "none";
       document.getElementById("invoicePage").style.display = "block";
+
+      let greeting = "";
+      if (username === "aldo") {
+         greeting = "Hallo, Geraldo";
+      } else if (username === "dias") {
+         greeting = "Hallo, Dias";
+      }
+
+      if (greeting !== "") {
+         const greetingElement = document.createElement("p");
+         greetingElement.textContent = greeting;
+         greetingElement.style.fontWeight = "bold";
+         greetingElement.style.fontSize = "1.2em";
+         greetingElement.style.marginBottom = "4px";
+         document
+            .getElementById("invoicePage")
+            .insertBefore(
+               greetingElement,
+               document.getElementById("invoiceForm")
+            );
+
+         const inputDataMessage = document.createElement("p");
+         inputDataMessage.textContent = "Silahkan input data";
+
+         document
+            .getElementById("invoicePage")
+            .insertBefore(
+               inputDataMessage,
+               document.getElementById("invoiceForm")
+            );
+      }
    } else {
       alert("Login gagal. Username atau password salah.");
    }
