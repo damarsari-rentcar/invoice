@@ -67,28 +67,23 @@ function handleInvoice() {
    const recipientPhone = document.getElementById("recipientPhone").value;
    const formattedRecipientPhone = recipientPhone.replace(/^0/, "62");
 
-   const mainMessage = `*Damarsari Rent Car*\n
+   const message = `*Damarsari Rent Car*\n
 ========================
-*INVOICE RENTAL MOBIL*
+*e-INVOICE RENTAL MOBIL*
 ========================
 \nNama Pelanggan : *${name}*
 \nModel Mobil : *${carModel}*
 \nTanggal Rental : *${rentalDate}*
 \nDurasi Rental : *${rentalDuration}* hari
 \nHarga Sewa per Hari : Rp${pricePerDay.toLocaleString()}
-========================
+\n========================
 Total Biaya : *${totalCost}*
 ========================
-Terima kasih telah menggunakan layanan kami.
+\nTerima kasih telah menggunakan layanan kami.
 Jika Anda memiliki pertanyaan lebih lanjut, jangan ragu untuk menghubungi kami.
-`;
 
-   const contactInfo = `\n> Hubungi kami di: +62 877-8833-2232`;
+Hubungi kami di: +62 877-8833-2232
 
-   const message =
-      mainMessage +
-      contactInfo +
-      `
 Best regards,
 *Damarsari Rent Car*`;
 
