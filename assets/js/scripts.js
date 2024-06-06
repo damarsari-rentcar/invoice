@@ -68,7 +68,7 @@ function handleInvoice() {
 
    const message = `*Damarsari Rent Car*\n
 ========================
-          *INVOICE RENTAL MOBIL*
+  *INVOICE RENTAL MOBIL*
 ========================
 \n*Nama Pelanggan:* ${name}
 \n*Model Mobil:* ${carModel}
