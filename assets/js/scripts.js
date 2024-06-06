@@ -63,21 +63,27 @@ function handleInvoice() {
    const rentalDate = document.getElementById("rentalDate").value;
    const rentalDuration = document.getElementById("rentalDuration").value;
    const totalCost = document.getElementById("totalCost").value;
+   const pricePerDay = carPrices[carModel];
    const recipientPhone = document.getElementById("recipientPhone").value;
    const formattedRecipientPhone = recipientPhone.replace(/^0/, "62");
 
    const message = `*Damarsari Rent Car*\n
-========================
-  *INVOICE RENTAL MOBIL*
-========================
-\n*Nama Pelanggan:* ${name}
-\n*Model Mobil:* ${carModel}
-\n*Tanggal Rental:* ${rentalDate}
-\n*Durasi Rental:* ${rentalDuration} hari
-\n*Total Biaya:* ${totalCost}
-\n========================\n
-Terima kasih telah menggunakan layanan kami.
-\nDamarsari Rent Car`;
+========================\n
+   *INVOICE RENTAL MOBIL*\n
+========================\n
+*Nama Pelanggan*: ${name}\n
+*Model Mobil*: ${carModel}\n
+*Tanggal Rental*: ${rentalDate}\n
+*Durasi Rental*: ${rentalDuration} hari\n
+*Harga Sewa per Hari*: Rp${pricePerDay.toLocaleString()}\n
+*Total Biaya*: ${totalCost}\n
+========================\n
+Terima kasih telah menggunakan layanan kami.\n
+Jika Anda memiliki pertanyaan lebih lanjut, jangan ragu untuk menghubungi kami.\n
+\n
+Best regards,\n
+*Damarsari Rent Car*\n
+Hubungi kami di: +62 877-8833-2232`;
 
    const whatsappUrl = `https://api.whatsapp.com/send?phone=${formattedRecipientPhone}&text=${encodeURIComponent(
       message
