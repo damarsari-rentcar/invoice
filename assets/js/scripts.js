@@ -75,8 +75,8 @@ function handleInvoice() {
 \nNama Pelanggan : *${name}*
 \nModel Mobil : *${carModel}*
 \nTanggal Rental : *${formattedRentalDate}* 
-\nDurasi Rental : *${rentalDuration}* hari
-\nHarga Sewa per Hari : Rp${pricePerDay.toLocaleString()}
+\nDurasi Rental : *${rentalDuration}* *hari*
+\nHarga Sewa per Hari : *Rp* *${pricePerDay.toLocaleString()}*
 \n========================
 Total Biaya : *${totalCost}*
 ========================
