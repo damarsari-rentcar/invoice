@@ -61,6 +61,7 @@ function handleInvoice() {
    const name = document.getElementById("name").value;
    const carModel = document.getElementById("carModel").value;
    const rentalDate = document.getElementById("rentalDate").value;
+   const formattedRentalDate = formatDate(rentalDate);
    const rentalDuration = document.getElementById("rentalDuration").value;
    const totalCost = document.getElementById("totalCost").value;
    const pricePerDay = carPrices[carModel];
@@ -73,7 +74,7 @@ function handleInvoice() {
 ========================
 \nNama Pelanggan : *${name}*
 \nModel Mobil : *${carModel}*
-\nTanggal Rental : *${rentalDate}*
+\nTanggal Rental : *${formattedRentalDate}* 
 \nDurasi Rental : *${rentalDuration}* hari
 \nHarga Sewa per Hari : Rp${pricePerDay.toLocaleString()}
 \n========================
@@ -92,6 +93,21 @@ Best regards,
    )}`;
 
    window.open(whatsappUrl, "_blank");
+}
+
+function formatDate(date) {
+   const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+   };
+   const [year, month, day] = date.split("-");
+   const formattedDate = new Date(year, month - 1, day).toLocaleDateString(
+      "id-ID",
+      options
+   );
+   return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
 }
 
 function handleLogin() {
