@@ -76,6 +76,7 @@ function handleInvoice() {
 \n*Tanggal Rental*: ${rentalDate}
 \n*Durasi Rental*: ${rentalDuration} hari
 \n*Harga Sewa per Hari*: Rp${pricePerDay.toLocaleString()}
+========================
 \n*Total Biaya*: ${totalCost}
 ========================
 Terima kasih telah menggunakan layanan kami.
