@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const carModel = document.getElementById("carModel").value;
       const rentalDate = document.getElementById("rentalDate").value;
       const rentalDuration = document.getElementById("rentalDuration").value;
-      const recipientPhoneValid = validatePhone(); // Use validatePhone result
+      const recipientPhoneValid = validatePhone();
       const errorMessage = document.getElementById("error-message");
 
       if (
@@ -99,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
       element.style.color = "red";
       element.style.marginTop = "10px";
       element.style.textAlign = "center";
+      element.style.fontWeight = "bold";
    }
 });
 
