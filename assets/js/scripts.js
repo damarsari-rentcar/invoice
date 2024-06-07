@@ -25,16 +25,10 @@ document.addEventListener("DOMContentLoaded", function () {
    document
       .getElementById("rentalDuration")
       .addEventListener("input", updatePrice);
-
-   document.getElementById("name").addEventListener("input", function () {
-      validateName();
-   });
-
+   document.getElementById("name").addEventListener("input", validateName);
    document
       .getElementById("recipientPhone")
-      .addEventListener("input", function () {
-         validatePhone();
-      });
+      .addEventListener("input", validatePhone);
 
    function validateName() {
       const name = document.getElementById("name").value;
@@ -43,13 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!name) {
          errorMessageName.style.display = "none";
       } else if (!/^[A-Za-z\s]+$/.test(name)) {
-         errorMessageName.textContent = "Nama hanya boleh mengandung huruf.";
-         errorMessageName.style.display = "block";
-         errorMessageName.style.fontFamily = "Arial, sans-serif";
-         errorMessageName.style.fontSize = "12px";
-         errorMessageName.style.color = "red";
-         errorMessageName.style.marginTop = "10px";
-         errorMessageName.style.textAlign = "center";
+         displayError(errorMessageName, "Nama hanya boleh mengandung huruf.");
       } else {
          errorMessageName.style.display = "none";
       }
@@ -59,11 +47,21 @@ document.addEventListener("DOMContentLoaded", function () {
       const recipientPhone = document.getElementById("recipientPhone").value;
       const errorMessage = document.getElementById("error-message");
 
-      if (
+      if (!recipientPhone) {
+         errorMessage.style.display = "none";
+         return false;
+      } else if (
          recipientPhone.match(/^0|^\+62/) &&
          recipientPhone.match(/^\d{9,14}$/)
       ) {
          errorMessage.style.display = "none";
+         return true;
+      } else {
+         displayError(
+            errorMessage,
+            "Nomor telepon harus dimulai dengan '0' atau '+62' dan memiliki panjang antara 9 hingga 14 digit."
+         );
+         return false;
       }
    }
 
@@ -72,38 +70,35 @@ document.addEventListener("DOMContentLoaded", function () {
       const carModel = document.getElementById("carModel").value;
       const rentalDate = document.getElementById("rentalDate").value;
       const rentalDuration = document.getElementById("rentalDuration").value;
-      const recipientPhone = document.getElementById("recipientPhone").value;
+      const recipientPhoneValid = validatePhone(); // Use validatePhone result
       const errorMessage = document.getElementById("error-message");
 
-      if (name && carModel && rentalDate && rentalDuration && recipientPhone) {
-         if (
-            !recipientPhone.match(/^0|^\+62/) ||
-            !recipientPhone.match(/^\d{9,14}$/)
-         ) {
-            errorMessage.textContent =
-               "Nomor telepon harus dimulai dengan '0' atau '+62' dan memiliki panjang antara 9 hingga 14 digit.";
-            errorMessage.style.display = "block";
-            errorMessage.style.fontFamily = "Arial, sans-serif";
-            errorMessage.style.fontSize = "12px";
-            errorMessage.style.color = "red";
-            errorMessage.style.marginTop = "10px";
-            errorMessage.style.textAlign = "center";
-            return false;
-         }
-
+      if (
+         name &&
+         carModel &&
+         rentalDate &&
+         rentalDuration &&
+         recipientPhoneValid
+      ) {
          errorMessage.style.display = "none";
          return true;
       } else {
-         errorMessage.textContent =
-            "Mohon lengkapi semua input sebelum mengirimkan invoice.";
-         errorMessage.style.display = "block";
-         errorMessage.style.fontFamily = "Arial, sans-serif";
-         errorMessage.style.fontSize = "12px";
-         errorMessage.style.color = "red";
-         errorMessage.style.marginTop = "10px";
-         errorMessage.style.textAlign = "center";
+         displayError(
+            errorMessage,
+            "Mohon lengkapi semua input sebelum mengirimkan invoice."
+         );
          return false;
       }
+   }
+
+   function displayError(element, message) {
+      element.textContent = message;
+      element.style.display = "block";
+      element.style.fontFamily = "Arial, sans-serif";
+      element.style.fontSize = "12px";
+      element.style.color = "red";
+      element.style.marginTop = "10px";
+      element.style.textAlign = "center";
    }
 });
 
