@@ -287,7 +287,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			<div class="flex flex-col min-h-[297mm] w-[210mm] bg-white p-10 font-sans shadow-xl rounded-lg">
 				<header class="flex justify-between items-center mb-10">
 					<div class="flex items-center space-x-4">
-						<img src="damarsari.png" alt="Damarsari Rent Car Logo" class="w-24 h-auto">
+						<img src="./assets/img/damarsari.png" alt="Damarsari Rent Car Logo" class="w-24 h-auto">
 							<div>
 								<h2 class="text-3xl font-extrabold text-gray-900">Damarsari Rent Car</h2>
 								<p class="text-sm text-gray-500">Solusi Rental Mobil Terpercaya</p>
