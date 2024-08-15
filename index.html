@@ -1,195 +1,295 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id" class="h-full">
    <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Login - Damarsari Rent Car</title>
-
-      <!-- CSS -->
+      <title>Damarsari Rent Car - Sistem Invoice</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <script>
+         tailwind.config = {
+            theme: {
+               extend: {
+                  fontFamily: {
+                     sans: ["Poppins", "sans-serif"],
+                  },
+                  colors: {
+                     light: "#F0F4F8",
+                     secondary: "#A0AEC0",
+                     primary: "#2B6CB0",
+                     dark: "#1A365D",
+                  },
+               },
+            },
+         };
+      </script>
       <link
-         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
          rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
       <link
          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
          rel="stylesheet"
       />
-      <link rel="stylesheet" href="assets/css/styles.css" />
-      <!-- JavaScript -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+      <link
+         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+         rel="stylesheet"
+      />
    </head>
-
-   <body>
-      <div id="loginPage" class="glass-card">
-         <h1>Login</h1>
-         <form id="loginForm">
-            <div class="form-group">
-               <label for="username" class="sr-only">Username</label>
-               <div class="input-group">
-                  <div class="input-group-prepend">
-                     <span class="input-group-text"
-                        ><i class="fas fa-user"></i
-                     ></span>
+   <body
+      class="h-full font-sans antialiased bg-gradient-to-br from-light to-white text-dark"
+   >
+      <!-- Login Page -->
+      <div
+         id="loginPage"
+         class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
+      >
+         <div class="max-w-md w-full space-y-8">
+            <div
+               class="bg-white p-8 rounded-3xl shadow-2xl transform transition-all duration-300 hover:shadow-3xl"
+            >
+               <div class="text-center">
+                  <h1 class="text-3xl font-bold text-primary mb-6">
+                     <i class="fas fa-car-side mr-2"></i>Damarsari Rent Car
+                  </h1>
+               </div>
+               <form id="loginForm" class="space-y-6">
+                  <div class="relative">
+                     <input
+                        type="text"
+                        id="username"
+                        class="peer w-full p-4 pt-5 text-sm bg-light border-2 border-secondary rounded-lg focus:border-primary focus:outline-none transition-all duration-300 ease-in-out"
+                        placeholder=" "
+                        required
+                     />
+                     <label
+                        for="username"
+                        class="absolute left-4 top-4 text-sm text-secondary transition-all duration-300 transform -translate-y-3 scale-75 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-primary"
+                        >Username</label
+                     >
+                     <i
+                        class="fas fa-user absolute right-4 top-1/2 transform -translate-y-1/2 text-sm text-secondary"
+                     ></i>
                   </div>
+                  <div class="relative">
+                     <input
+                        type="password"
+                        id="password"
+                        class="peer w-full p-4 pt-5 text-sm bg-light border-2 border-secondary rounded-lg focus:border-primary focus:outline-none transition-all duration-300 ease-in-out"
+                        placeholder=" "
+                        required
+                     />
+                     <label
+                        for="password"
+                        class="absolute left-4 top-4 text-sm text-secondary transition-all duration-300 transform -translate-y-3 scale-75 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-primary"
+                        >Password</label
+                     >
+                     <i
+                        class="fas fa-lock absolute right-4 top-1/2 transform -translate-y-1/2 text-sm text-secondary"
+                     ></i>
+                  </div>
+                  <button
+                     type="submit"
+                     id="loginButton"
+                     class="w-full bg-primary text-white p-4 rounded-lg transition-all duration-300 ease-in-out transform hover:bg-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-lg"
+                  >
+                     <i class="fas fa-sign-in-alt mr-2"></i>Masuk
+                  </button>
+               </form>
+            </div>
+         </div>
+      </div>
+      <!-- Invoice Page -->
+      <div
+         id="invoicePage"
+         class="hidden min-h-screen py-12 px-4 sm:px-6 lg:px-8"
+      >
+         <div
+            class="max-w-4xl mx-auto bg-white p-4 sm:p-10 rounded-3xl shadow-lg transition-all duration-300 hover:shadow-xl"
+         >
+            <h2
+               class="text-xl sm:text-3xl font-bold text-center text-primary mb-4 sm:mb-8"
+            >
+               <i class="fas fa-file-invoice mr-2"></i>Invoice Generator
+            </h2>
+            <form id="invoiceForm" class="space-y-8">
+               <div
+                  id="error-message"
+                  class="hidden bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg"
+                  role="alert"
+               ></div>
+               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                  <div class="relative">
+                     <input
+                        type="text"
+                        id="name"
+                        class="peer w-full p-4 pt-6 text-sm bg-light border-2 border-secondary rounded-lg focus:border-primary focus:outline-none transition-all duration-300 ease-in-out"
+                        placeholder=" "
+                        required
+                     />
+                     <label
+                        for="name"
+                        class="absolute left-4 top-5 text-sm text-secondary transition-all duration-300 transform -translate-y-4 scale-75 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-primary"
+                     >
+                        Nama Pelanggan
+                     </label>
+                  </div>
+                  <div class="relative">
+                     <input
+                        type="tel"
+                        id="recipientPhone"
+                        class="peer w-full p-4 pt-6 md:pt-6 text-sm md:text-sm text-xs bg-light border-2 border-secondary rounded-lg focus:border-primary focus:outline-none transition-all duration-300 ease-in-out"
+                        placeholder=" "
+                        pattern="[0-9]{9,15}|-"
+                        required
+                     />
+                     <label
+                        for="recipientPhone"
+                        class="absolute left-4 top-5 text-sm md:text-sm text-xs text-secondary transition-all duration-300 transform md:-translate-y-4 -translate-y-2 scale-75 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-primary md:whitespace-nowrap whitespace-normal break-words"
+                     >
+                        Nomor HP Penerima (atau "-" jika tidak ada)
+                     </label>
+                  </div>
+               </div>
+               <div id="carContainer" class="space-y-6">
+                  <!-- Car entries will be dynamically added here -->
+               </div>
+               <button
+                  type="button"
+                  id="addCar"
+                  class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary transition-all duration-300 ease-in-out transform hover:bg-dark hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-md"
+               >
+                  <i class="fas fa-plus mr-2"></i>Tambah Mobil
+               </button>
+               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                  <div class="relative">
+                     <input
+                        type="date"
+                        id="rentalDate"
+                        class="peer w-full p-4 pt-6 text-sm bg-light border-2 border-secondary rounded-lg focus:border-primary focus:outline-none transition-all duration-300 ease-in-out"
+                        required
+                     />
+                     <label
+                        for="rentalDate"
+                        class="absolute left-4 top-5 text-sm text-secondary transition-all duration-300 transform -translate-y-4 scale-75 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-primary"
+                        >Tanggal Rental</label
+                     >
+                  </div>
+                  <div class="relative">
+                     <input
+                        type="number"
+                        id="rentalDuration"
+                        class="peer w-full p-4 pt-6 text-sm bg-light border-2 border-secondary rounded-lg focus:border-primary focus:outline-none transition-all duration-300 ease-in-out"
+                        placeholder=" "
+                        min="1"
+                        required
+                     />
+                     <label
+                        for="rentalDuration"
+                        class="absolute left-4 top-5 text-sm text-secondary transition-all duration-300 transform -translate-y-4 scale-75 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-primary"
+                        >Durasi Rental (hari)</label
+                     >
+                  </div>
+               </div>
+               <div class="relative">
                   <input
                      type="text"
-                     class="form-control"
-                     id="username"
-                     placeholder="Username"
+                     id="totalCost"
+                     class="peer w-full p-4 pt-6 text-sm bg-light border-2 border-secondary rounded-lg focus:border-primary focus:outline-none transition-all duration-300 ease-in-out"
+                     placeholder=" "
+                     readonly
                      required
                   />
+                  <label
+                     for="totalCost"
+                     class="absolute left-4 top-5 text-sm text-secondary transition-all duration-300 transform -translate-y-4 scale-75 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-primary"
+                     >Total Biaya</label
+                  >
                </div>
-            </div>
-            <div class="form-group">
-               <label for="password" class="sr-only">Password</label>
-               <div class="input-group">
-                  <div class="input-group-prepend">
-                     <span class="input-group-text"
-                        ><i class="fas fa-lock"></i
-                     ></span>
+               <div>
+                  <label class="block text-lg font-medium mb-4 text-dark"
+                     >Tanda Tangan Damarsari</label
+                  >
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                     <div class="flex flex-col">
+                        <canvas
+                           id="signature-pad"
+                           class="border-2 rounded-lg w-full h-48 bg-light border-secondary mb-4"
+                           width="400"
+                           height="200"
+                        ></canvas>
+                        <div class="mt-auto">
+                           <button
+                              type="button"
+                              id="clear-signature"
+                              class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-primary bg-light transition-all duration-300 ease-in-out transform hover:bg-secondary hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                           >
+                              <i class="fas fa-eraser mr-2"></i>Hapus Tanda
+                              Tangan
+                           </button>
+                        </div>
+                     </div>
+                     <div class="flex flex-col">
+                        <div
+                           id="signature-preview"
+                           class="border-2 rounded-lg w-full h-48 bg-contain bg-no-repeat bg-center bg-light border-secondary mb-4"
+                        ></div>
+                        <div class="mt-auto">
+                           <input
+                              type="file"
+                              id="signature-upload"
+                              accept="image/png, image/jpeg"
+                              class="hidden"
+                           />
+                           <label
+                              for="signature-upload"
+                              class="w-full cursor-pointer inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-primary transition-all duration-300 ease-in-out transform hover:bg-dark hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                           >
+                              <i class="fas fa-upload mr-2"></i>Unggah Tanda
+                              Tangan
+                           </label>
+                        </div>
+                     </div>
                   </div>
-                  <input
-                     type="password"
-                     class="form-control"
-                     id="password"
-                     placeholder="Password"
-                     required
-                  />
                </div>
-            </div>
+               <button
+                  type="submit"
+                  id="createInvoiceButton"
+                  class="w-full flex justify-center py-3 sm:py-4 px-4 sm:px-6 border border-transparent rounded-lg shadow-lg text-base sm:text-lg font-medium text-white bg-primary hover:bg-dark transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+               >
+                  <i class="fas fa-file-invoice mr-2 text-sm sm:text-base"></i
+                  >Buat Invoice
+               </button>
+            </form>
+         </div>
+         <!-- Invoice Preview -->
+         <div
+            id="invoice"
+            class="mt-6 sm:mt-12 w-full max-w-full sm:max-w-4xl mx-auto bg-white p-4 sm:p-10 rounded-3xl shadow-xl hidden transition-all duration-300 hover:shadow-2xl overflow-x-auto"
+         >
+            <!-- Invoice content will be populated here -->
+         </div>
+         <div
+            id="actionButtons"
+            class="mt-12 max-w-4xl mx-auto flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 hidden"
+         >
             <button
-               type="submit"
-               id="loginButton"
-               class="btn btn-primary btn-block"
+               id="shareWhatsApp"
+               class="flex-1 py-4 px-6 border border-transparent rounded-lg shadow-lg text-lg font-medium text-white bg-green-600 transition-all duration-300 ease-in-out transform hover:bg-green-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             >
-               Login
+               <i class="fab fa-whatsapp mr-2"></i>Bagikan ke WhatsApp
             </button>
-         </form>
-      </div>
-
-      <div id="invoicePage" class="glass-card" style="display: none">
-         <h1>Form Invoice</h1>
-         <form id="invoiceForm" onsubmit="return validateForm()">
-            <div
-               id="error-message"
-               class="alert alert-danger"
-               style="display: none"
-            ></div>
-            <div class="form-group">
-               <label for="name"><i class="fas fa-user"></i> Nama:</label>
-               <input
-                  type="text"
-                  class="form-control"
-                  id="name"
-                  name="name"
-                  placeholder="Nama"
-                  required
-               />
-            </div>
-            <div class="form-group">
-               <label for="carModel"
-                  ><i class="fas fa-car"></i> Model Mobil:</label
-               >
-               <select
-                  class="form-control"
-                  id="carModel"
-                  name="carModel"
-                  onchange="updatePrice()"
-                  required
-               >
-                  <option value="" disabled selected>Pilih Model Mobil</option>
-                  <option value="Alphard">Alphard - Rp. 2.500.000</option>
-                  <option value="Fortuner">Fortuner - Rp. 1.500.000</option>
-                  <option value="Pajero">Pajero - Rp. 1.500.000</option>
-                  <option value="Innova zenix">
-                     Innova zenix - Rp. 800.000
-                  </option>
-                  <option value="Innova reborn">
-                     Innova reborn - Rp. 600.000
-                  </option>
-                  <option value="Xpander">Xpander - Rp. 500.000</option>
-                  <option value="Terios">Terios - Rp. 500.000</option>
-                  <option value="Rush">Rush - Rp. 500.000</option>
-                  <option value="Avanza Matic">
-                     Avanza (Matic) - Rp. 450.000
-                  </option>
-                  <option value="Avanza Manual">
-                     Avanza (Manual) - Rp. 350.000
-                  </option>
-                  <option value="Xenia Manual">
-                     Xenia (Manual) - Rp. 350.000
-                  </option>
-               </select>
-            </div>
-            <div class="form-group">
-               <label for="rentalDate"
-                  ><i class="fas fa-calendar-alt"></i> Tanggal Rental:</label
-               >
-               <input
-                  type="date"
-                  class="form-control"
-                  id="rentalDate"
-                  name="rentalDate"
-                  placeholder="Tanggal Rental"
-                  required
-               />
-            </div>
-            <div class="form-group">
-               <label for="rentalDuration"
-                  ><i class="fas fa-clock"></i> Durasi Rental (hari):</label
-               >
-               <input
-                  type="number"
-                  class="form-control"
-                  id="rentalDuration"
-                  name="rentalDuration"
-                  placeholder="Durasi Rental (hari)"
-                  oninput="calculateTotal()"
-                  required
-               />
-            </div>
-            <div class="form-group">
-               <label for="totalCost"
-                  ><i class="fas fa-money-bill-alt"></i> Total Biaya:</label
-               >
-               <input
-                  type="text"
-                  class="form-control"
-                  id="totalCost"
-                  name="totalCost"
-                  placeholder="Total Biaya"
-                  readonly
-                  required
-               />
-            </div>
-            <div class="form-group">
-               <label for="recipientPhone"
-                  ><i class="fas fa-phone"></i> Nomor HP Penerima:</label
-               >
-               <input
-                  type="tel"
-                  class="form-control"
-                  id="recipientPhone"
-                  name="recipientPhone"
-                  pattern="[0-9]{9,15}"
-                  placeholder="Nomor HP Penerima"
-                  required
-               />
-            </div>
             <button
-               type="submit"
-               id="sendInvoiceButton"
-               class="btn btn-primary btn-block"
+               id="exportPDF"
+               class="flex-1 py-4 px-6 border border-transparent rounded-lg shadow-lg text-lg font-medium text-white bg-primary transition-all duration-300 ease-in-out transform hover:bg-dark hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
             >
-               <i class="fas fa-paper-plane"></i> Kirim Invoice
+               <i class="fas fa-file-pdf mr-2"></i>Export ke PDF
             </button>
-         </form>
+         </div>
       </div>
-
-      <!-- JavaScript -->
-      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
       <script src="assets/js/scripts.js"></script>
    </body>
 </html>
